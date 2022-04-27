@@ -1,0 +1,166 @@
+﻿@{
+ViewData["Title"] = "Login";
+//Layout = "_LoginLayout";
+}
+<html>
+   <head>
+      <meta name="viewport" content="width=device-width" />
+      <meta name="bal" content="width=device-width" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+   </head>
+   <body>
+      <div class="login-form">
+         <form>
+            <div class="text-center"> <img src="~/images/hms_cmms.png" style="margin-bottom: 30px;"/></div>
+            <div class="row">
+               <div class="col-lg-5 col-md-5">
+                  <label class="logintext">Username
+                  <input class ="form-control" type="text" id="UserName"  required="required">
+                  </label>        
+                  <label class="text-danger logintext" id="userid">Please enter username</label>
+               </div>
+               <div class="col-lg-5 col-md-5">
+                  <label class="logintext" >Password 
+                   <span class="text-danger logintext" style="float: right;cursor:pointer">
+                  <a data-toggle="modal" data-target="#ForgotpasswordModal">Forgot password?</a>
+                  </span>
+                  <input class ="form-control" type="password" id="Password" required="required">
+                  </label>
+                  <label class="text-danger logintext" id="pwdid">Please enter password</label>
+               </div>
+               <div class="col-lg-2 col-md-2">
+                  <button type="button" class="btn btnloginColor " onclick="Signin()">Login</button>
+               </div>
+            </div>
+         </form>
+         <div class="row">
+            <div class="col-lg-4 col-md-4">
+            </div>
+            <div class="col-lg-2 col-md-2">
+               <button type="button" class="btn btn-light loginbtn" data-toggle="modal" data-target="#disclaimereModal" >Disclaimer</button>             
+            </div>
+            <div class="col-lg-2 col-md-2">
+               <button type="button" class="btn btn-light loginbtn">Trademarks</button>  
+            </div>
+            <div class="col-lg-4 col-md-4">
+            </div>
+         </div>
+         <div class="text-center"> <img src="~/images/hms_logo2.png" style="width: 130px;height: 93px;left: 655px;top: 483px;" /></div>
+      </div>
+      <!-- Modal Disclaimer Start-->
+      <div class="modal fade bd-example-modal-lg" id="disclaimereModal" tabindex="-1" role="dialog" aria-labelledby="disclaimereModalTilte" aria-hidden="true">
+         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+               <div class="modal-header" style="background: #D56126;">
+                  <h5 class="modal-title modalheader">Disclaimer</h5>
+                  <button type="button" class="close modalheader" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div class="Disclaimertext">
+                     <b>By Entering This Site, You Accept Our Disclaimer:</b>  HMS Health is a registered Missouri Corporation (the "Provider"), which provides online information (the "Service"). By using the Service you agree that the Provider will not be held responsible in any way for the Services that you request or receive. 
+                  </div>
+                  <div class="Disclaimertext" style="margin-top: 25px;margin-bottom: 10px;">
+                     THE PROVIDER MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, AS TO THE OPERATION OF THE SITE, THE INFORMATION, CONTENT, MATERIALS OR PRODUCTS INCLUDED ON THE SITE. TO THE FULL EXTENT PERMISSIBLE BY APPLICABLE LAW, THE PROVIDER DISCLAIMS ALL WARRANTIES, EXPRESS, IMPLIED, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE PROVIDER WILL NOT BE LIABLE FOR ANY DAMAGES OF ANY KIND ARISING FROM THE USE OF THIS SITE INCLUDING, BUT NOT LIMITED TO, DIRECT, INDIRECT, INCIDENTAL, PUNITIVE AND/OR CONSEQUENTIAL DAMAGES. 
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- Modal Disclaimer End-->
+      <!-- Modal Forgot password Start-->
+      <div class="modal fade bd-example-modal-lg" id="ForgotpasswordModal" tabindex="-1" role="dialog" aria-labelledby="ForgotpasswordTilte" aria-hidden="true">
+         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+               <div class="modal-header" style="background: #D56126;">
+                  <h5 class="modal-title modalheader">Forgot password?</h5>
+                  <button type="button" class="close modalheader" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div class="forgetpwdtext">
+                     Enter your email and we’ll send you a link to reset your password.
+                  </div>
+                  <div class="Disclaimertext" style="margin-top: 25px;margin-bottom: 10px;">
+                     <div class="row">
+                        <div class="col-lg-7 col-md-7">
+                           <label class="logintext">Email
+                           <input class ="form-control" type="text" id="Email"  required="required">
+                           </label>                   
+                        </div>
+                        <div class="col-lg-4 col-md-4">
+                           <button type="button" class="btn btnloginColor " onclick="Resetpwd()">Reset Password</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- Modal Forgot password End-->
+   </body>
+</html>
+
+<style type="text/css">
+    header, footer {
+        display: none !important
+    }
+     
+</style>
+<script>
+
+    document.getElementById("userid").hidden=true;
+    document.getElementById("pwdid").hidden=true;
+
+   function Signin() {
+       var UserName = $('#UserName').val();
+       var Password = $('#Password').val();
+       if((UserName == null || UserName == "" || UserName == undefined )&& (Password == null || Password == "" || Password == undefined)){
+          document.getElementById("userid").hidden=false;
+          document.getElementById("pwdid").hidden=false;
+       }else if(UserName == null || UserName == "" || UserName == undefined ){
+           document.getElementById("userid").hidden=false;
+           document.getElementById("pwdid").hidden=true;
+       }else if(Password == null || Password == "" || Password == undefined){
+          document.getElementById("userid").hidden=true;
+          document.getElementById("pwdid").hidden=false;
+       }
+       else if (UserName !== "" && Password !== "") {
+            document.getElementById("userid").hidden=true;
+            document.getElementById("pwdid").hidden=true;
+            $.ajax({
+               type: 'POST',
+               url: '/Login/SignIn',
+               data: { 'UserName': UserName, 'Password': Password },
+               success: function (result) {
+                   if(result.status == "Success"){
+                       window.location.href = "Customer/Index";
+                   }
+                 console.log(result,"result");
+               },
+               error: function (xhr, ajaxOptions, thrownError) {
+                  
+               },
+           });
+       }   
+   }
+
+     function Resetpwd(){
+        var Email = $('#Email').val();
+       $.ajax({
+               type: 'POST',
+               url: '/Login/ForgetPassword',
+               data: { 'Email': Email},
+               success: function (result) {                 
+                 console.log(result,"result");
+               },
+               error: function (xhr, ajaxOptions, thrownError) {
+                  
+               },
+           });
+   }
+   
+</script>

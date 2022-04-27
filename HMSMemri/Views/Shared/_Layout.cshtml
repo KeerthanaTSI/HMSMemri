@@ -1,0 +1,111 @@
+﻿@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HMSMemri</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+
+
+    <header>
+        <div class="header header-section fixed-header">
+             <div class="container-fluid">
+                <div class="header-logo">
+                        <a class="header-brand" href="#">
+                            <img src="~/images/hms_cmms_2.png" class="header-brand-img" alt="">
+                        </a>
+                    </div>
+             </div>
+        </div>
+  @*       <div class="d-flex ">
+                    <div class="dropdown d-none d-lg-flex align-items-center">
+                        <div class="dropdown header-dropdown">
+                            <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
+                               <div class="avatar avatar-md d-block" style="background-image: url('/images/default_user.png')"></div>                          
+                            </a>
+                        </div>
+                    </div>
+         </div>*@
+      <div class="navbar-collapse ">
+        <div class="left-side-menu">
+            <ul class="nav navbar-nav ">
+                <div class="headerlist">
+                    <li id="Customers" class="nav-item">
+                        <a id="Customers" class="nav-link active" href="@Url.Action("Index", "Customer")"><span class="project-icon"></span> Customers</a>
+                    </li>
+                    <li id="Inventory" class="nav-item">
+                        <a id="Inventory" class="nav-link" href="@Url.Action("Index", "Inventory")"><span class="customer-icon"></span> Inventory</a>
+                    </li>   
+                    <li id="Vendors" class="nav-item">
+                        <a id="Vendors" class="nav-link" href="@Url.Action("Index", "Vendors")"><span class="customer-icon"></span> Vendors</a>
+                    </li>   
+                    <li id="BioMedTickets" class="nav-item">
+                        <a id="SubMenuProjects" class="nav-link" href="@Url.Action("Index", "BioMedTickets")"><span class="customer-icon"></span> BioMed Tickets</a>
+                    </li>
+                    <li id="Contracts" class="nav-item">
+                        <a id="SubMenuProjects" class="nav-link" href="@Url.Action("Index", "Contracts")"><span class="customer-icon"></span> Contracts</a>
+                    </li>
+                    <li id="Facilites" class="nav-item">
+                        <a id="SubMenuProjects" class="nav-link" href="@Url.Action("Index", "Facilites")"><span class="customer-icon"></span> Facilites</a>
+                    </li>
+
+                    <li id="logout" class="icon-home submenu">
+                        <a id="subLogOut" class="nav-link  " href="@Url.Action("Index", "Login")"><span class="logout-icon"></span> LOGOUT</a>
+                    </li>
+                </div>
+            </ul>
+        </div>
+
+    </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+  @*  <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - HMSMemri - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>*@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+<script>
+ $(document).ready(function () {
+        var thisPage = GetCurrentPageName();
+        console.log(thisPage);
+        if (thisPage.trim().indexOf("Customer") !== -1) {
+            $('.nav.navbar-nav li').removeClass('active');
+            $("#Customers").addClass('active');
+        }
+        else if (thisPage.trim().indexOf("Inventory") !== -1) {
+            $('.nav.navbar-nav li').removeClass('active');
+            $("#Inventory").addClass('active');
+
+        } else if (thisPage.trim().indexOf("Vendors") !== -1) {
+            $('.nav.navbar-nav li').removeClass('active');
+            $("#Vendors").addClass('active');
+
+        } else if (thisPage.trim().indexOf("BioMedTickets") !== -1) {
+            $('.nav.navbar-nav li').removeClass('active');
+            $("#BioMedTickets").addClass('active');
+
+        }
+        
+    });
+
+    function GetCurrentPageName() {
+        var sPath = window.location.pathname;
+        var sPage1 = sPath.split('/');
+        var sPage = sPage1[sPage1.length - 2] + '/' + sPage1[sPage1.length - 1];
+        return sPage.toLowerCase();
+    }</script>

@@ -1,0 +1,159 @@
+﻿@using Microsoft.AspNetCore.Http
+@using System.IO;
+@using Microsoft.AspNetCore.Mvc
+<div class="header header-section fixed-header">
+    <div class="container-fluid">
+        <div class="main-menu">
+            <div class="header-logo">
+                <a class="header-brand" href="#">
+                    <img src="~/SiteImage/logo.png" class="header-brand-img" alt="">
+                </a>
+                <a href="#" class="header-toggler d-lg-none" data-toggle="collapse" data-target="#headerMenuCollapse">
+                    <span class="header-toggler-icon"></span>
+                </a>
+            </div>
+            <div class="d-flex ml-auto">
+                <ul class="header collapse d-lg-flex p-0 mb-0" id="headerMenuCollapse">
+                    <ul class="nav nav-tabs border-0">
+                        @if (Context.Session.GetInt32("UserTypeID") == 3)
+                        {
+                            <li class="nav-item">
+                                <a href="/ApproveTrees/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "ApproveTree" ? "active" : "")">Dashboard</a>
+                            </li>
+                        }
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link">Manage <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                            <ul class="dropdown-content">
+                                <li> <a href="/ManageUsers/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "ManageUser" ? "active" : "")">Users</a></li>
+                                @if (Context.Session.GetInt32("UserTypeID") == 3)
+                                {
+                                    <li> <a href="/Country/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "ManageCountry" ? "active" : "")">Countries</a></li>
+                                    <li><a href="/ManageCategory/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "ManageCategory" ? "active" : "")">Category</a></li>
+                                    @*<li><a href="/EmailTemplate/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "EmailTemplate" ? "active" : "")">Email Template</a></li>*@
+                                    <li><a href="/NewsAnnouncements/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "NewsAnnouncements" ? "active" : "")">News</a></li>
+                                    <li><a href="/ManageCustomURL/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "ManageCustomURL" ? "active" : "")">Endorsers</a></li>
+                                    <li><a href="/CoinBlock/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "CoinBlock" ? "active" : "")">Coin Block</a></li>
+                                    <li><a href="/ManageAmbassadorApprovals/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "ManageAmbassadorApprovals" ? "active" : "")">Ambassadors</a></li>
+                                    <li><a href="/Rejections/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "Rejections1" ? "active" : "")">Rejection Reason</a></li>
+                                    <li><a href="/CompanyAccounts/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "CompanyAccount" ? "active" : "")">Company Accounts</a></li>
+                                }
+                            </ul>
+                        </li>
+                        @if (Context.Session.GetInt32("UserTypeID") == 3)
+                        {
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link">Settings<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                <ul class="dropdown-content">
+                                    <li><a href="/CoinSetting/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "ManageCoinSplit" ? "active" : "")">Coin Setting</a></li>
+                                    <li><a href="/Settings/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "ManageSettings" ? "active" : "")">App Setting</a></li>
+                                    <li><a href="/TradingFee/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "TradingFee" ? "active" : "")">Trading Fee</a></li>
+                                    <li><a href="/CoinCollection/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "CoinCollection" ? "active" : "")">Coin Collection</a></li>
+                                    <li><a href="/CCMM/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "CCMM" ? "active" : "")">CCMM</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link">Node<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                <ul class="dropdown-content">
+                                    <li><a href="/WalletVersion/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "ManageWalletVersion" ? "active" : "")">Wallet Version</a></li>
+                                    <li><a href="/NodeUsers/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "NodeUsers" ? "active" : "")">Node Users</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/UserHistory/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "UserHistory" ? "active" : "")">User Activity</a>
+                            </li>
+                        }
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link">Reports<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                            <ul class="dropdown-content">
+                                <li><a href="/UserTranscation/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "UserTranscation" ? "active" : "")">AML Transcations</a></li>
+                                <li><a href="/DailyBalanceReport/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "DailyBalanceReport" ? "active" : "")">Daily Balance Report</a></li>
+                                <li><a href="/EFTransactionReport/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "EFTransactionReport" ? "active" : "")">EF Transcations</a></li>
+                                <li><a href="/FCMinted/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "FCMinted" ? "active" : "")">FC Minted</a></li>
+                                <li><a href="/FCWeightReport/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "FCWeightReport" ? "active" : "")">FC Weighted Average</a></li>
+                                <li><a href="/FCSalesReport/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "FCSalesReport" ? "active" : "")">FC Sales Report</a></li>
+                                <li><a href="/TraderEarning/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "TraderEarning" ? "active" : "")">Fee Earning</a></li>
+                                <li><a href="/FeeEarning/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "FeeEarning" ? "active" : "")">NZ Fee Earning</a></li>
+                                <li><a href="/MerchantReport/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "MerchantReport" ? "active" : "")">Merchant Report</a></li>
+
+
+                            </ul>
+                        </li>
+                        @*<li class="nav-item">
+                                <a href="/EFTransactionReport/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "EFTransactionReport" ? "active" : "")">Reports</a>
+                            </li>*@
+                        @*<li class="nav-item">
+                                <a href="/KYB/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "KYB" ? "active" : "")">KYB</a>
+                            </li>*@
+                        @*<li class="nav-item">
+                                <a href="/EmailLog/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "EmailLog" ? "active" : "")">Notification Logs</a>
+                            </li>*@
+                        @if (Context.Session.GetInt32("UserTypeID") == 3)
+                        {
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link">Logs<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                <ul class="dropdown-content">
+                                    <li><a href="/EmailLog/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "EmailLog" ? "active" : "")">Notification Logs</a></li>
+                                    <li><a href="/JobLog/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "JobLog" ? "active" : "")">Job Logs</a></li>
+                                    <li><a href="/Notifications/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "Notifications" ? "active" : "")">Push Notification Test</a></li>
+                                    <li><a href="/CoinSentLog/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "CoinSentLog" ? "active" : "")">MissedCoin Log</a></li>
+                                    <li><a href="/ApiLogs/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "ApiLogs" ? "active" : "")">API Logs</a></li>
+                                    @*<li><a href="/NodeLog/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "NodeLog" ? "active" : "")">Node Log</a></li>*@
+                                </ul>
+                            </li>
+                        }
+                        @*<li class="nav-item dropdown">
+                                <a href="#" class="nav-link">KYC Verification<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                <ul class="dropdown-content">
+                                    <li><a href="/KYCVerfication/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "KYCVerfication" ? "active" : "")">KYC Process</a></li>
+                                    <li><a href="/KYCHistory/Index" class="nav-link @(Context.Session.GetString("ActiveMenu") == "KYCHistory" ? "active" : "")">KYC Histroy</a></li>
+
+                                </ul>
+                            </li>*@
+                    </ul>
+            </div>
+            <div class="d-flex ">
+                <div class="dropdown d-none d-lg-flex align-items-center">
+                    <div class="dropdown header-dropdown">
+                        <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
+                            @if (File.Exists(Context.Session.GetString("ProfilePic")))
+                            {
+                                <div class="avatar avatar-md d-block" style="background-image: url(@Context.Session.GetString(" ProfilePic"))"></div>
+                            }
+                            else
+                            { <div class="avatar avatar-md d-block" style="background-image: url('/SiteImage/default_user.jpg')"></div>}
+                            @*<span class="ml-2 d-none d-lg-block">
+                                    <span class="text-default">@Context.Session.GetString("Username")</span>
+                                    <small class="text-muted d-block mt-1">Administrator</small>
+                                </span>*@
+                        </a>
+                        @* <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                            <a class="dropdown-item" href="/ApproveTrees/Logout">
+                                <i class="dropdown-icon fe fe-log-out"></i> Sign out
+                            </a>
+                            <div class="small text-muted xx-small mt-2 p-3 planing-list">
+                                    Plantings to Approve : <label id="PlantingtoApprove"></label><br />
+                                    Current maximum waiting time : <label id="MaxWaitingTime"></label><br />
+                                    Average waiting time past 24 hours :  <label id="AvgPast24"></label><br />
+                                    Average waiting time in the past week :  <label id="AvgPastWeek"></label><br />
+                                    Maximum waiting time in the past week : <label id="MaxWeek"></label><br />
+                                    Trees approved in the past 24 hours : <label id="Past24Approved"></label><br />
+                                    Trees approved in the past week : <label id="PastWeekApproved"></label><br />
+                                </div>
+
+                                            </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="header-welcome-text d-flex justify-content-between flex-wrap">
+    <h2>Welcome @Context.Session.GetString("Username") !</h2>
+    <a class="signout d-flex align-items-center" href="/ApproveTrees/Logout">
+        Log out <img src="~/SiteImage/logout.png" />
+    </a>
+</div>
+
+
